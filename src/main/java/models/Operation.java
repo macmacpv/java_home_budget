@@ -6,14 +6,13 @@ import java.time.LocalDateTime;
 
 public abstract class Operation {
 
-    private final int id;
+    private int id;
     private CurrencyType currency;
     private double amount;
     private LocalDateTime date;
     private String description;
 
     public Operation(int id, CurrencyType currency, double amount, LocalDateTime date, String description) {
-        //@TODO: id from account operation list
         this.id = id;
         this.currency = currency == null ? CurrencyType.USD : currency;
         if (amount <= 0) throw new IllegalArgumentException("Amount must be positive");
@@ -25,6 +24,8 @@ public abstract class Operation {
     public int getId() {
         return id;
     }
+
+    public void setId(int id) { this.id = id; }
 
     public CurrencyType getCurrency() {
         return currency;

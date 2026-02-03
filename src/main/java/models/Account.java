@@ -2,37 +2,36 @@ package models;
 
 import models.utils.CurrencyType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Account {
 
-    private final int id;
+    private int id;
     private String name;
     private double balance;
     private CurrencyType currency;
-    private List<Operation> operations;
+    private Map<Integer, Operation> operations;
 
-    public Account(int id, String name, CurrencyType currency, double balance, List<Operation> operations) {
-        //@TODO: id from repository map
+    public Account(int id, String name, CurrencyType currency, double balance, Map<Integer, Operation> operations) {
         this.id = id;
-        this.name = name == null ? "Konto domyślne" : name;
+        this.name = name == null ? "Default account" : name;
         this.currency = currency == null ? CurrencyType.USD : currency;
         this.balance = balance;
-        this.operations = operations == null ? new ArrayList<>() : operations;
+        this.operations = operations == null ? new HashMap<>() : operations;
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) { this.id = id; }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        if (name == null) name = "Konto domyślne";
+        if (name == null) name = "Default account";
         this.name = name;
     }
 
@@ -61,12 +60,12 @@ public class Account {
         this.currency = currency;
     }
 
-    public List<Operation> getOperations() {
-        return operations;
+    public Map<Integer, Operation> getOperations() {
+        return new HashMap<>(operations);
     }
 
-    public void setOperations(List<Operation> operations) {
-        if (operations == null) operations = new ArrayList<>();
+    public void setOperations(Map<Integer, Operation> operations) {
+        if (operations == null) operations = new HashMap<>();
         this.operations = operations;
     }
 
