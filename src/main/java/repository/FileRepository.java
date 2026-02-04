@@ -59,16 +59,17 @@ public class FileRepository<T extends Identifiable> implements Repository<T> {
 
     @Override
     public Optional<T> findById(int id) {
-        return Optional.empty();
+        return cache.stream().filter(entity -> entity.getId() == id).findFirst();
     }
 
     @Override
     public List<T> findAll() {
-        return List.of();
+        return new ArrayList<>(cache);
     }
 
     @Override
     public void deleteById(int id) {
-
+        boolean removed = cache.removeIf(entity -> entity.getId() == id);
+        if (removed) saveCache();
     }
 }

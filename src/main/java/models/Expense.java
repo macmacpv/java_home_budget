@@ -9,8 +9,8 @@ public class Expense extends Operation {
 
     private ExpenseCategory category;
 
-    public Expense(int id, int accountId, CurrencyType currency, double amount, LocalDateTime date, String description, ExpenseCategory category) {
-        super(id, accountId, currency, amount, date, description);
+    public Expense(int accountId, CurrencyType currency, double amount, LocalDateTime date, String description, ExpenseCategory category) {
+        super(accountId, currency, amount, date, description);
         this.category = category == null ? ExpenseCategory.OTHER : category;
     }
 
