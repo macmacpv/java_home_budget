@@ -1,7 +1,7 @@
 package models;
 
-import models.utils.CurrencyType;
-import models.utils.ExpenseCategory;
+import models.enums.CurrencyType;
+import models.enums.ExpenseCategory;
 
 import java.time.LocalDateTime;
 
@@ -9,8 +9,8 @@ public class Expense extends Operation {
 
     private ExpenseCategory category;
 
-    public Expense(int id, CurrencyType currency, double amount, LocalDateTime date, String description, ExpenseCategory category) {
-        super(id, currency, amount, date, description);
+    public Expense(int id, int accountId, CurrencyType currency, double amount, LocalDateTime date, String description, ExpenseCategory category) {
+        super(id, accountId, currency, amount, date, description);
         this.category = category == null ? ExpenseCategory.OTHER : category;
     }
 

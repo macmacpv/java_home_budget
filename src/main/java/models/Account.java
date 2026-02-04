@@ -1,23 +1,22 @@
 package models;
 
-import models.utils.CurrencyType;
+import models.enums.CurrencyType;
+import models.interfaces.Identifiable;
+import repository.Repository;
 
 import java.util.*;
 
-public class Account {
+public class Account implements Identifiable {
 
-    private int id;
+    private int id = 0;
     private String name;
     private double balance;
     private CurrencyType currency;
-    private Map<Integer, Operation> operations;
 
-    public Account(int id, String name, CurrencyType currency, double balance, Map<Integer, Operation> operations) {
-        this.id = id;
+    public  Account(String name, CurrencyType currency, double balance) {
         this.name = name == null ? "Default account" : name;
         this.currency = currency == null ? CurrencyType.USD : currency;
         this.balance = balance;
-        this.operations = operations == null ? new HashMap<>() : operations;
     }
 
     public int getId() {
@@ -58,15 +57,6 @@ public class Account {
     public void setCurrency(CurrencyType currency) {
         if (currency == null) currency = CurrencyType.USD;
         this.currency = currency;
-    }
-
-    public Map<Integer, Operation> getOperations() {
-        return new HashMap<>(operations);
-    }
-
-    public void setOperations(Map<Integer, Operation> operations) {
-        if (operations == null) operations = new HashMap<>();
-        this.operations = operations;
     }
 
     @Override

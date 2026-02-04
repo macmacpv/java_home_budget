@@ -1,13 +1,13 @@
 package models;
 
-import models.utils.CurrencyType;
+import models.enums.CurrencyType;
 
 import java.time.LocalDateTime;
 
 public class Income extends Operation {
 
-    public Income(int id, CurrencyType currency, double amount, LocalDateTime date, String description) {
-        super(id, currency, amount, date, description);
+    public Income(int id, int accountId, CurrencyType currency, double amount, LocalDateTime date, String description) {
+        super(id, accountId, currency, amount, date, description);
     }
 
     @Override

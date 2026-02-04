@@ -1,19 +1,21 @@
 package models;
 
-import models.utils.CurrencyType;
+import models.enums.CurrencyType;
+import models.interfaces.Identifiable;
 
 import java.time.LocalDateTime;
 
-public abstract class Operation {
+public abstract class Operation implements Identifiable {
 
-    private int id;
+    private int id = 0;
+    private int accountId;
     private CurrencyType currency;
     private double amount;
     private LocalDateTime date;
     private String description;
 
-    public Operation(int id, CurrencyType currency, double amount, LocalDateTime date, String description) {
-        this.id = id;
+    public Operation(int accountId, CurrencyType currency, double amount, LocalDateTime date, String description) {
+        this.accountId = accountId;
         this.currency = currency == null ? CurrencyType.USD : currency;
         if (amount <= 0) throw new IllegalArgumentException("Amount must be positive");
         this.amount = amount;
@@ -26,6 +28,14 @@ public abstract class Operation {
     }
 
     public void setId(int id) { this.id = id; }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
 
     public CurrencyType getCurrency() {
         return currency;
