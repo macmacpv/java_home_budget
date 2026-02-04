@@ -3,6 +3,7 @@ import models.Operation;
 import models.enums.CurrencyType;
 import repository.FileRepository;
 import repository.Repository;
+import service.BudgetService;
 
 public class Main {
 
@@ -10,7 +11,8 @@ public class Main {
         Repository<Account> accountRepo = new FileRepository<>("accounts.json", Account.class);
         Repository<Operation> operationRepo = new FileRepository<>("operations.json", Operation.class);
 
-        accountRepo.save(new Account(null, CurrencyType.PLN, 10.0));
+        BudgetService budgetService = new BudgetService(accountRepo, operationRepo);
+        budgetService.createAccount(new Account("Konto oszczędnościowe", CurrencyType.PLN, 0.0));
     }
 
 }

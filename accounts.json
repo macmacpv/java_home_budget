@@ -10,5 +10,11 @@
     "name": "Default account",
     "balance": 10.0,
     "currency": "PLN"
+  },
+  {
+    "id": 3,
+    "name": "Konto oszczędnościowe",
+    "balance": 0.0,
+    "currency": "PLN"
   }
 ]
