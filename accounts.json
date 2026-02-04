@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Default account",
+    "balance": 10.0,
+    "currency": "PLN"
+  },
+  {
+    "id": 2,
+    "name": "Default account",
+    "balance": 10.0,
+    "currency": "PLN"
+  }
+]

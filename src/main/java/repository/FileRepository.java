@@ -5,13 +5,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import models.interfaces.Identifiable;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class FileRepository<T extends Identifiable> implements Repository<T> {
 
@@ -29,7 +30,7 @@ public class FileRepository<T extends Identifiable> implements Repository<T> {
 
     private List<T> loadCache(){
         Path path = Paths.get(filePath);
-        if (!Files.notExists(path)) {
+        if (Files.notExists(path)) {
             return new ArrayList<>();
         }
 
@@ -39,6 +40,7 @@ public class FileRepository<T extends Identifiable> implements Repository<T> {
             List<T> list = gson.fromJson(json, type);
             return list != null ? list : new ArrayList<>();
         } catch (IOException e) {
+            System.err.println(e.toString());
             return new ArrayList<>();
         }
     }
@@ -48,13 +50,23 @@ public class FileRepository<T extends Identifiable> implements Repository<T> {
         try {
             Files.writeString(Paths.get(filePath), json);
         } catch (IOException e) {
-            System.err.println("Error saving file '" + filePath + "'");
+            System.err.println(e.toString());
         }
     }
 
     @Override
     public T save(T entity) {
-        return null;
+        if (entity.getId() == 0) {
+            int maxId = cache.stream().map(Identifiable::getId).max(Integer::compareTo).orElse(0);
+            entity.setId(maxId + 1);
+            cache.add(entity);
+        } else {
+            cache.removeIf(existing -> existing.getId() == entity.getId());
+            cache.add(entity);
+        }
+
+        saveCache();
+        return entity;
     }
 
     @Override
