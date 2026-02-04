@@ -26,10 +26,6 @@ public class BudgetService {
         return accountRepo.save(account);
     }
 
-    public Account getAccountById(int id) {
-        return accountRepo.findById(id).orElse(null);
-    }
-
     public List<Account> findAll() {
         return accountRepo.findAll();
     }
@@ -42,11 +38,8 @@ public class BudgetService {
     }
 
     public void addIncome(int accountId, CurrencyType currencyType, double amount, String description) {
-        Account account = getAccountById(accountId);
-        if (account == null) {
-            System.err.println(accountId + " not found");
-            return;
-        }
+        Account account = accountRepo.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
 
         Income operation = new Income(accountId, currencyType, amount, LocalDateTime.now(), description);
         operation.execute(account);
@@ -56,11 +49,8 @@ public class BudgetService {
     }
 
     public void addExpense(int accountId, CurrencyType currencyType, double amount, String description, ExpenseCategory expenseCategory) {
-        Account account = getAccountById(accountId);
-        if (account == null) {
-            System.err.println(accountId + " not found");
-            return;
-        }
+        Account account = accountRepo.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
 
         Expense operation = new Expense(accountId, currencyType, amount, LocalDateTime.now(), description, expenseCategory);
         operation.execute(account);
